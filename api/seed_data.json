@@ -1,0 +1,72 @@
+[
+  {
+    "title": "VPN disconnects every hour",
+    "description": "The VPN connection drops roughly every 60 minutes and has to be reconnected manually.",
+    "created": "2026-09-01T08:15:00Z",
+    "status": "OPEN"
+  },
+  {
+    "title": "Printer on floor 3 out of toner",
+    "description": "The shared printer next to the kitchen on floor 3 shows a low toner warning and prints faded pages.",
+    "created": "2026-09-02T10:40:00Z",
+    "status": "OPEN"
+  },
+  {
+    "title": "Cannot access shared drive",
+    "description": "Access denied when opening the team shared drive since this morning.",
+    "created": "2026-09-03T07:55:00Z",
+    "status": "RESOLVED",
+    "resolution": "Re-added the user to the file share access group."
+  },
+  {
+    "title": "Laptop battery drains quickly",
+    "description": "Battery goes from full to empty in about two hours with normal use.",
+    "created": "2026-09-04T13:20:00Z",
+    "status": "OPEN"
+  },
+  {
+    "title": "Email calendar not syncing on phone",
+    "description": "Meetings added on the laptop do not appear in the phone calendar.",
+    "created": "2026-09-05T09:05:00Z",
+    "status": "CLOSED",
+    "resolution": "Removed and re-added the email account on the phone."
+  },
+  {
+    "title": "Request for a second monitor",
+    "description": "Requesting a second monitor for the desk to work with dashboards side by side.",
+    "created": "2026-09-08T11:30:00Z",
+    "status": "OPEN"
+  },
+  {
+    "title": "Slow Wi-Fi in meeting room B",
+    "description": "Video calls in meeting room B freeze because of a weak Wi-Fi signal.",
+    "created": "2026-09-09T14:10:00Z",
+    "status": "RESOLVED",
+    "resolution": "Replaced the wireless access point in meeting room B."
+  },
+  {
+    "title": "Password reset link expired",
+    "description": "The password reset email link says it has expired when opened.",
+    "created": "2026-09-10T08:45:00Z",
+    "status": "CLOSED",
+    "resolution": "Sent a new reset link and confirmed the login works."
+  },
+  {
+    "title": "Projector in conference room flickers",
+    "description": "The projector image flickers every few seconds during presentations.",
+    "created": "2026-09-14T15:25:00Z",
+    "status": "OPEN",
+    "comments": [
+      {
+        "text": "Tried a different HDMI cable, the flicker continues.",
+        "created": "2026-09-15T09:00:00Z"
+      }
+    ]
+  },
+  {
+    "title": "License needed for data visualization tool",
+    "description": "Need a license for the data visualization software to build team reports.",
+    "created": "2026-09-16T10:00:00Z",
+    "status": "OPEN"
+  }
+]
