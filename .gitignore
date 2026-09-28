@@ -1,0 +1,18 @@
+# Secrets
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Editor and OS
+.vscode/
+.DS_Store
