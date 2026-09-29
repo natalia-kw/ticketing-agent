@@ -26,8 +26,9 @@ hold the API's response. In that case:
 tickets.
 - 422: explain what was invalid using the details in the message. If the message \
 lists the valid options, list them for the user. Then suggest a concrete next step.
-- If status_code is null, the ticket service could not be reached. Tell the user \
-it is unavailable and repeat the instructions from the error message.
+- If status_code is null, the request did not get an answer from the ticket API, \
+for example because the service is not running. Explain the problem using the \
+error message, including any instructions it gives.
 - Do not retry the same failing call unchanged, and never claim an action \
 succeeded when it failed.
 

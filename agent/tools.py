@@ -101,11 +101,12 @@ TOOL_DEFINITIONS: list[dict[str, Any]] = [
 
 
 class ToolExecutor:
-    """Runs tool calls from the model against the ticket API."""
+    """Runs tool calls from the model directly against the ticket API."""
 
     definitions = TOOL_DEFINITIONS
 
     def __init__(self, api: TicketApiClient) -> None:
+        self._api = api
         self._handlers: dict[str, Callable[..., ApiResult]] = {
             "list_tickets": api.list_tickets,
             "get_ticket": api.get_ticket,
@@ -128,6 +129,9 @@ class ToolExecutor:
             return handler(**arguments).to_dict()
         except TypeError as exc:
             return _tool_error(f"Invalid arguments for '{name}': {exc}")
+
+    def close(self) -> None:
+        self._api.close()
 
 
 def _tool_error(message: str) -> dict[str, Any]:
