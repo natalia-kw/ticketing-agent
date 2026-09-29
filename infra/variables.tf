@@ -4,8 +4,8 @@ variable "app_name" {
   default     = "ticketing-api"
 
   validation {
-    condition     = can(regex("^[a-z0-9-]{3,40}$", var.app_name))
-    error_message = "app_name may only contain lowercase letters, numbers and hyphens (3 to 40 characters)."
+    condition     = can(regex("^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$", var.app_name))
+    error_message = "app_name must be 3 to 40 lowercase letters, numbers or hyphens, and start and end with a letter or number."
   }
 }
 
@@ -22,7 +22,6 @@ variable "sku_name" {
 }
 
 variable "subscription_id" {
-  description = "Azure subscription to deploy into. Placeholder, replace before deploying."
+  description = "Azure subscription to deploy into. Required for plan and apply, not for validate."
   type        = string
-  default     = "00000000-0000-0000-0000-000000000000"
 }
