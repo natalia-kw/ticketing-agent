@@ -8,12 +8,28 @@ from fastapi import APIRouter, Depends, FastAPI, Query, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
-from api.models import CommentCreate, Ticket, TicketCreate, TicketStatus, TicketUpdate
+from api.models import (
+    CommentCreate,
+    ErrorResponse,
+    Ticket,
+    TicketCreate,
+    TicketStatus,
+    TicketUpdate,
+)
 from api.repository import BusinessRuleError, TicketNotFoundError, TicketRepository
 
 load_dotenv()
 
 router = APIRouter(prefix="/tickets", tags=["tickets"])
+
+# Documented error responses, so /docs shows the real {"detail": "..."} format.
+NOT_FOUND = {404: {"model": ErrorResponse, "description": "Ticket not found"}}
+INVALID = {
+    422: {
+        "model": ErrorResponse,
+        "description": "Invalid input or business rule violation",
+    }
+}
 
 
 def get_repository(request: Request) -> TicketRepository:
@@ -26,7 +42,7 @@ Repo = Annotated[TicketRepository, Depends(get_repository)]
 # ---------- Endpoints ----------
 
 
-@router.get("")
+@router.get("", responses=INVALID)
 def list_tickets(
     repo: Repo,
     status: Annotated[
@@ -40,19 +56,19 @@ def list_tickets(
     return repo.list_tickets(status=status, q=q)
 
 
-@router.get("/{ticket_id}")
+@router.get("/{ticket_id}", responses=NOT_FOUND | INVALID)
 def get_ticket(ticket_id: int, repo: Repo) -> Ticket:
     """Get a single ticket by ID."""
     return repo.get(ticket_id)
 
 
-@router.post("", status_code=201)
+@router.post("", status_code=201, responses=INVALID)
 def create_ticket(data: TicketCreate, repo: Repo) -> Ticket:
     """Create a new ticket. It always starts with status OPEN."""
     return repo.create(data)
 
 
-@router.patch("/{ticket_id}")
+@router.patch("/{ticket_id}", responses=NOT_FOUND | INVALID)
 def update_ticket(ticket_id: int, changes: TicketUpdate, repo: Repo) -> Ticket:
     """Update only the fields that are sent.
 
@@ -61,13 +77,13 @@ def update_ticket(ticket_id: int, changes: TicketUpdate, repo: Repo) -> Ticket:
     return repo.update(ticket_id, changes)
 
 
-@router.delete("/{ticket_id}", status_code=204)
+@router.delete("/{ticket_id}", status_code=204, responses=NOT_FOUND | INVALID)
 def delete_ticket(ticket_id: int, repo: Repo) -> None:
     """Delete a ticket."""
     repo.delete(ticket_id)
 
 
-@router.post("/{ticket_id}/comments", status_code=201)
+@router.post("/{ticket_id}/comments", status_code=201, responses=NOT_FOUND | INVALID)
 def add_comment(ticket_id: int, data: CommentCreate, repo: Repo) -> Ticket:
     """Add a comment to a ticket and return the updated ticket."""
     return repo.add_comment(ticket_id, data)

@@ -60,3 +60,9 @@ class CommentCreate(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     text: str = Field(min_length=1, max_length=2000)
+
+
+class ErrorResponse(BaseModel):
+    """The body of every error response."""
+
+    detail: str = Field(examples=["Ticket 999 not found."])

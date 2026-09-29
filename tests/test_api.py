@@ -156,3 +156,11 @@ def test_add_comment(client):
 
 def test_health(client):
     assert client.get("/health").json() == {"status": "ok"}
+
+
+def test_docs_describe_the_real_error_format(client):
+    schema = client.get("/openapi.json").json()
+    patch_responses = schema["paths"]["/tickets/{ticket_id}"]["patch"]["responses"]
+    for code in ("404", "422"):
+        ref = patch_responses[code]["content"]["application/json"]["schema"]["$ref"]
+        assert ref.endswith("/ErrorResponse")
