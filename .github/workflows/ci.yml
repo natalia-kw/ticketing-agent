@@ -33,3 +33,25 @@ jobs:
 
       - name: Run tests
         run: pytest -v
+
+  terraform:
+    name: Terraform validate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v5
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Check formatting
+        run: terraform fmt -check
+
+      - name: Initialize
+        run: terraform init -backend=false
+
+      - name: Validate
+        run: terraform validate
